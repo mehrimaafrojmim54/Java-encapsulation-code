@@ -1,0 +1,177 @@
+✅ Problem 1: Thread-Safe Banking Application
+
+### ✔️ Clean Code
+
+```java
+class BankAccount {
+    private double balance;
+    private volatile boolean isLocked = false;
+
+    public BankAccount(double initialBalance) {
+        this.balance = initialBalance;
+    }
+
+    public synchronized void updateBalance(double amount) {
+        if (!isLocked) {
+            balance += amount;
+            System.out.println("Balance updated. New balance: " + balance);
+        } else {
+            System.out.println("Transaction failed: System is locked.");
+        }
+    }
+
+    public void triggerLockdown() {
+        isLocked = true;
+        System.out.println("System is now in lockdown!");
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+}
+```
+
+### 🔍 Key Idea (Exam er jonno)
+
+* `synchronized` → একসাথে একটাই thread balance change করতে পারবে (race condition বন্ধ)
+* `volatile` → `isLocked` সব thread real-time update দেখবে (cache issue হবে না)
+
+👉 Short line:
+**Thread safety = synchronized + volatile**
+
+---
+
+# ✅ Problem 2: Secure Game Save System
+
+### ✔️ Clean Code
+
+```java
+import java.io.*;
+
+class PlayerProfile implements Serializable {
+    private String username;
+    private int score;
+    private transient String password;
+
+    public PlayerProfile(String username, int score, String password) {
+        this.username = username;
+        this.score = score;
+        this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "User: " + username + ", Score: " + score + ", Password: " + password;
+    }
+}
+
+class GameSaveManager {
+    public void saveProfile(PlayerProfile profile) {
+        try {
+            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("save.dat"));
+            out.writeObject(profile);
+            out.close();
+            System.out.println("Game saved (password not included).");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+### 🔍 Key Idea
+
+* `Serializable` → object file এ save করা যাবে
+* `transient` → sensitive data (password) save হবে না
+
+👉 Short line:
+**Security = transient keyword**
+
+---
+
+# ✅ Problem 3: Immutable System Configuration
+
+### ✔️ Clean Code
+
+```java
+final class SystemConfig {
+    private static final int MAX_USERS = 500;
+
+    public static int getMaxUsers() {
+        return MAX_USERS;
+    }
+}
+
+public class AppLauncher {
+    public static void main(String[] args) {
+        System.out.println(SystemConfig.getMaxUsers());
+    }
+}
+```
+
+### 🔍 Key Idea
+
+* `final class` → inherit করা যাবে না
+* `static final` → constant value (change হবে না)
+* setter নাই → read-only
+
+👉 Short line:
+**Immutability = final + static final + no setter**
+
+---
+
+# ✅ Problem 4: Abstract & Access Control
+
+### ✔️ Clean Code
+
+```java
+abstract class MediaDevice {
+
+    protected void pairHardware() {
+        System.out.println("Hardware paired successfully.");
+    }
+
+    public abstract void playAudio();
+}
+
+class SmartSpeaker extends MediaDevice {
+
+    @Override
+    public void playAudio() {
+        pairHardware();
+        System.out.println("Playing audio...");
+    }
+}
+
+class AppController {
+    public static void main(String[] args) {
+        SmartSpeaker speaker = new SmartSpeaker();
+        speaker.playAudio();
+
+        // speaker.pairHardware(); ❌ error (protected)
+    }
+}
+```
+
+### 🔍 Key Idea
+
+* `abstract` → object বানানো যাবে না
+* `protected` → শুধু subclass access করতে পারবে
+
+👉 Short line:
+**Access control = protected + abstract**
+
+---
+
+# 🔥 Overall Cheat Sheet (Last Minute)
+
+| Problem   | Concept                  |
+| --------- | ------------------------ |
+| Banking   | synchronized + volatile  |
+| Game Save | Serializable + transient |
+| Config    | final + static final     |
+| Device    | abstract + protected     |
+
+---
+
+চাইলে আমি এগুলা থেকে **viva questions + tricky MCQ** বানিয়ে দিতে পারি—teacher normally এগুলা ঘুরায় 😏
