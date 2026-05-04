@@ -1,0 +1,222 @@
+ঠিক আছে—আমি এগুলা **clean, সাজানো + easy বুঝার মতো** করে দিলাম। তুই চাইলে এগুলা সরাসরি খাতায়ও লিখতে পারবি 👇
+
+---
+
+# 🟢 Problem 1: Smart Home Device
+
+```java
+abstract class SmartDevice {
+    abstract void turnOn();
+    abstract void turnOff();
+    abstract void showStatus();
+}
+
+class Light extends SmartDevice {
+    void turnOn() {
+        System.out.println("Light ON (70% brightness)");
+    }
+    void turnOff() {
+        System.out.println("Light OFF");
+    }
+    void showStatus() {
+        System.out.println("Brightness: 70%");
+    }
+}
+
+class Fan extends SmartDevice {
+    void turnOn() {
+        System.out.println("Fan ON (Speed 3)");
+    }
+    void turnOff() {
+        System.out.println("Fan OFF");
+    }
+    void showStatus() {
+        System.out.println("Speed: 3");
+    }
+}
+```
+
+👉 Idea: **same method, different device → different behavior (Polymorphism)**
+
+---
+
+# 🟢 Problem 2: Food Delivery
+
+```java
+abstract class Restaurant {
+    abstract void placeOrder();
+    abstract void prepareFood();
+    abstract void deliveryTime();
+}
+
+class FastFood extends Restaurant {
+    void placeOrder() {
+        System.out.println("Fast food ordered");
+    }
+    void prepareFood() {
+        System.out.println("Prepared quickly");
+    }
+    void deliveryTime() {
+        System.out.println("20 minutes");
+    }
+}
+
+class TraditionalFood extends Restaurant {
+    void placeOrder() {
+        System.out.println("Traditional food ordered");
+    }
+    void prepareFood() {
+        System.out.println("Fresh cooking");
+    }
+    void deliveryTime() {
+        System.out.println("45 minutes");
+    }
+}
+```
+
+---
+
+# 🟢 Problem 3: Exam System
+
+```java
+abstract class Exam {
+    abstract void start();
+    abstract void evaluate();
+    abstract void result();
+}
+
+class ProgrammingExam extends Exam {
+    void start() {
+        System.out.println("Exam started");
+    }
+    void evaluate() {
+        System.out.println("Checked with test cases");
+    }
+    void result() {
+        System.out.println("Marks: 85");
+    }
+}
+```
+
+---
+
+# 🟢 Problem 4: Ride Service
+
+```java
+abstract class Ride {
+    double baseFare = 50;
+    abstract void fare(double d);
+}
+
+class Bike extends Ride {
+    void fare(double d) {
+        System.out.println("Bike Fare: " + (baseFare + d * 10));
+    }
+}
+
+class Car extends Ride {
+    void fare(double d) {
+        System.out.println("Car Fare: " + (baseFare + d * 20));
+    }
+}
+```
+
+---
+
+# 🟢 Problem 5: Loan System
+
+```java
+abstract class Loan {
+    double amount = 100000;
+    abstract void interest();
+}
+
+class HomeLoan extends Loan {
+    void interest() {
+        System.out.println("Home Loan: " + (amount * 0.08));
+    }
+}
+
+class EducationLoan extends Loan {
+    void interest() {
+        System.out.println("Education Loan: " + (amount * 0.06));
+    }
+}
+```
+
+---
+
+# 🟢 Problem 7: Game Character
+
+```java
+abstract class Character {
+    abstract void attack();
+    abstract void status();
+}
+
+class Warrior extends Character {
+    void attack() {
+        System.out.println("Damage: 100");
+    }
+    void status() {
+        System.out.println("Warrior Power: 50");
+    }
+}
+
+class Mage extends Character {
+    void attack() {
+        System.out.println("Damage: 120");
+    }
+    void status() {
+        System.out.println("Mage Power: 40");
+    }
+}
+```
+
+---
+
+# 🟢 Problem 8: Delivery
+
+```java
+abstract class Delivery {
+    int distance = 15;
+    abstract void charge();
+}
+
+class BikeDelivery extends Delivery {
+    void charge() {
+        System.out.println("Charge: " + distance * 8);
+    }
+}
+
+class DroneDelivery extends Delivery {
+    void charge() {
+        System.out.println("Charge: " + distance * 25);
+    }
+}
+```
+
+---
+
+# ⚡ একদম সহজভাবে বুঝে রাখ
+
+👉 **Abstraction**
+= abstract class (rule set করে)
+
+👉 **Polymorphism**
+= same method → different output
+
+---
+
+# 🎯 এক লাইনের magic
+
+**“Parent declare করে, child implement করে”**
+
+---
+
+চাইলে আমি এগুলা থেকে
+👉 2 mark answer
+👉 viva question
+👉 tricky MCQ
+
+একদম exam targeting করে বানিয়ে দিতে পারি 😏
