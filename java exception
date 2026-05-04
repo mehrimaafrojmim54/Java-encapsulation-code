@@ -1,0 +1,276 @@
+Got it — you want **clean, correct, not overcomplicated Java code** exactly following the instructions. I’ll give you all 6 problems properly structured with custom exceptions + try-catch usage.
+
+---
+
+# ✅ Problem 1: Train Ticket Booking System
+
+```java
+class SeatNotAvailableException extends Exception {
+    public SeatNotAvailableException(String message) {
+        super(message);
+    }
+}
+
+class Train {
+    private int availableSeats;
+
+    public Train(int seats) {
+        this.availableSeats = seats;
+    }
+
+    public void bookTicket(int seats) throws SeatNotAvailableException {
+        if (seats > availableSeats) {
+            throw new SeatNotAvailableException("Not enough seats available!");
+        }
+        availableSeats -= seats;
+        System.out.println("Ticket booked successfully!");
+    }
+
+    public void checkAvailableSeats() {
+        System.out.println("Available seats: " + availableSeats);
+    }
+}
+
+class TicketBookingSystem {
+    public static void main(String[] args) {
+        Train train = new Train(50);
+
+        try {
+            train.bookTicket(60);
+        } catch (SeatNotAvailableException e) {
+            System.out.println(e.getMessage());
+        }
+
+        train.checkAvailableSeats();
+    }
+}
+```
+
+---
+
+# ✅ Problem 2: Mobile Recharge System
+
+```java
+class InvalidRechargeAmountException extends Exception {
+    public InvalidRechargeAmountException(String message) {
+        super(message);
+    }
+}
+
+class MobileAccount {
+    private double balance;
+
+    public MobileAccount(double balance) {
+        this.balance = balance;
+    }
+
+    public void recharge(double amount) throws InvalidRechargeAmountException {
+        if (amount < 10) {
+            throw new InvalidRechargeAmountException("Minimum recharge is 10 taka!");
+        }
+        balance += amount;
+        System.out.println("Recharge successful!");
+    }
+
+    public void checkBalance() {
+        System.out.println("Balance: " + balance);
+    }
+}
+
+class RechargeService {
+    public static void main(String[] args) {
+        MobileAccount acc = new MobileAccount(50);
+
+        try {
+            acc.recharge(5);
+        } catch (InvalidRechargeAmountException e) {
+            System.out.println(e.getMessage());
+        }
+
+        acc.checkBalance();
+    }
+}
+```
+
+---
+
+# ✅ Problem 3: Course Registration System
+
+```java
+class PrerequisiteNotCompletedException extends Exception {
+    public PrerequisiteNotCompletedException(String msg) {
+        super(msg);
+    }
+}
+
+class Course {
+    private String prerequisite;
+
+    public Course(String prerequisite) {
+        this.prerequisite = prerequisite;
+    }
+
+    public void registerCourse(boolean completed) throws PrerequisiteNotCompletedException {
+        if (!completed) {
+            throw new PrerequisiteNotCompletedException("Prerequisite not completed!");
+        }
+        System.out.println("Course registered successfully!");
+    }
+}
+
+class CourseRegistration {
+    public static void main(String[] args) {
+        Course course = new Course("Basic Programming");
+
+        try {
+            course.registerCourse(false);
+        } catch (PrerequisiteNotCompletedException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+}
+```
+
+---
+
+# ✅ Problem 4: ATM Withdrawal System
+
+```java
+class InsufficientBalanceException extends Exception {
+    public InsufficientBalanceException(String msg) {
+        super(msg);
+    }
+}
+
+class BankAccount {
+    private double balance;
+
+    public BankAccount(double balance) {
+        this.balance = balance;
+    }
+
+    public void withdraw(double amount) throws InsufficientBalanceException {
+        if (amount > balance) {
+            throw new InsufficientBalanceException("Insufficient balance!");
+        }
+        balance -= amount;
+        System.out.println("Withdrawal successful!");
+    }
+
+    public void checkBalance() {
+        System.out.println("Balance: " + balance);
+    }
+}
+
+class ATM {
+    public static void main(String[] args) {
+        BankAccount acc = new BankAccount(1000);
+
+        try {
+            acc.withdraw(1500);
+        } catch (InsufficientBalanceException e) {
+            System.out.println(e.getMessage());
+        }
+
+        acc.checkBalance();
+    }
+}
+```
+
+---
+
+# ✅ Problem 5: Student Result Processing
+
+```java
+class InvalidMarkException extends Exception {
+    public InvalidMarkException(String msg) {
+        super(msg);
+    }
+}
+
+class Student {
+    private int marks;
+
+    public void setMarks(int marks) throws InvalidMarkException {
+        if (marks < 0 || marks > 100) {
+            throw new InvalidMarkException("Marks must be between 0 and 100!");
+        }
+        this.marks = marks;
+    }
+
+    public void calculateGrade() {
+        if (marks >= 80) System.out.println("Grade: A");
+        else if (marks >= 60) System.out.println("Grade: B");
+        else System.out.println("Grade: C");
+    }
+}
+
+class ResultProcessor {
+    public static void main(String[] args) {
+        Student s = new Student();
+
+        try {
+            s.setMarks(120);
+            s.calculateGrade();
+        } catch (InvalidMarkException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+}
+```
+
+---
+
+# ✅ Problem 6: Password Validation System
+
+```java
+class WeakPasswordException extends Exception {
+    public WeakPasswordException(String msg) {
+        super(msg);
+    }
+}
+
+class UserAccount {
+    private String password;
+
+    public void setPassword(String password) throws WeakPasswordException {
+        if (password.length() < 8) {
+            throw new WeakPasswordException("Password must be at least 8 characters!");
+        }
+        this.password = password;
+        System.out.println("Password set successfully!");
+    }
+}
+
+class RegistrationSystem {
+    public static void main(String[] args) {
+        UserAccount user = new UserAccount();
+
+        try {
+            user.setPassword("abc");
+        } catch (WeakPasswordException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+}
+```
+
+---
+
+## 🔍 Quick Reality Check (important)
+
+* ✔ Custom Exception used (`extends Exception`)
+* ✔ `throw` used properly
+* ✔ `throws` used in method signature
+* ✔ `try-catch` used in main system class
+* ✔ Logic matches exactly PDF instructions
+
+---
+
+If you want, I can:
+
+* Merge all into **one file for exam writing**
+* Or make them **shorter (2–3 mark version)**
+* Or explain **how to write this in exam step-by-step**
+
+Just tell me 👍
