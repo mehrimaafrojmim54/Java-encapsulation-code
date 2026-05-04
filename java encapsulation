@@ -175,3 +175,163 @@ class AppController {
 ---
 
 চাইলে আমি এগুলা থেকে **viva questions + tricky MCQ** বানিয়ে দিতে পারি—teacher normally এগুলা ঘুরায় 😏
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import java.io.*;
+
+// ======================
+// 🟢 Problem 1: Banking
+// ======================
+class BankAccount {
+    private double balance;
+    private volatile boolean isLocked = false;
+
+    public BankAccount(double balance) {
+        this.balance = balance;
+    }
+
+    public synchronized void updateBalance(double amount) {
+        if (!isLocked) {
+            balance += amount;
+            System.out.println(Thread.currentThread().getName() +
+                    " Balance: " + balance);
+        } else {
+            System.out.println("Account Locked!");
+        }
+    }
+
+    public void triggerLockdown() {
+        isLocked = true;
+        System.out.println("System Locked!");
+    }
+}
+
+class TransactionThread extends Thread {
+    BankAccount acc;
+    double amount;
+
+    TransactionThread(BankAccount acc, double amount) {
+        this.acc = acc;
+        this.amount = amount;
+    }
+
+    public void run() {
+        acc.updateBalance(amount);
+    }
+}
+
+
+// ======================
+// 🟢 Problem 2: Game Save
+// ======================
+class PlayerProfile implements Serializable {
+    private String name;
+    private int score;
+    private transient String password;
+
+    public PlayerProfile(String name, int score) {
+        this.name = name;
+        this.score = score;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+}
+
+class GameSaveManager {
+    public static void saveProfile(PlayerProfile p) throws Exception {
+        ObjectOutputStream out =
+                new ObjectOutputStream(new FileOutputStream("save.dat"));
+
+        out.writeObject(p);
+        out.close();
+
+        System.out.println("Game Saved!");
+    }
+}
+
+
+// ======================
+// 🟢 Problem 3: Config
+// ======================
+final class SystemConfig {
+    private static final int MAX_USERS = 500;
+
+    public static int getMaxUsers() {
+        return MAX_USERS;
+    }
+}
+
+
+// ======================
+// 🟢 Problem 4: Device
+// ======================
+abstract class MediaDevice {
+
+    protected void pairHardware() {
+        System.out.println("Hardware Paired");
+    }
+
+    abstract void playAudio();
+}
+
+class SmartSpeaker extends MediaDevice {
+
+    void playAudio() {
+        pairHardware();
+        System.out.println("Playing Music...");
+    }
+}
+
+
+// ======================
+// 🟢 Main Class (Run All)
+// ======================
+public class Main {
+    public static void main(String[] args) throws Exception {
+
+        // 🔹 Problem 1 Test
+        System.out.println("=== Banking System ===");
+        BankAccount acc = new BankAccount(1000);
+
+        TransactionThread t1 = new TransactionThread(acc, 500);
+        TransactionThread t2 = new TransactionThread(acc, -200);
+
+        t1.start();
+        t2.start();
+
+        acc.triggerLockdown();
+
+
+        // 🔹 Problem 2 Test
+        System.out.println("\n=== Game Save ===");
+        PlayerProfile p = new PlayerProfile("Mim", 100);
+        p.setPassword("1234");
+
+        GameSaveManager.saveProfile(p);
+
+
+        // 🔹 Problem 3 Test
+        System.out.println("\n=== Config ===");
+        System.out.println("Max Users: " + SystemConfig.getMaxUsers());
+
+
+        // 🔹 Problem 4 Test
+        System.out.println("\n=== Device ===");
+        SmartSpeaker sp = new SmartSpeaker();
+        sp.playAudio();
+    }
+}
